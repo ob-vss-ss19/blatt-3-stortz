@@ -32,6 +32,8 @@ var flagBind = flag.String("bind", "localhost:8091", "Bind to address")
 func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
+
+
 	defer wg.Wait()
 
 	flag.Parse()

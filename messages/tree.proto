@@ -2,3 +2,13 @@ syntax = "proto3";
 package messages;
 
 message HelloWorld {}
+
+message CreateTree {}
+
+message AddNode {
+    int32 TreeID = 1;
+    int32 Key = 2;
+    string Value = 3;
+}
+
+

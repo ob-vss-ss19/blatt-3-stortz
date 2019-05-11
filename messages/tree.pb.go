@@ -58,22 +58,122 @@ func (m *HelloWorld) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_HelloWorld proto.InternalMessageInfo
 
+type CreateTree struct {
+}
+
+func (m *CreateTree) Reset()      { *m = CreateTree{} }
+func (*CreateTree) ProtoMessage() {}
+func (*CreateTree) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb3889276909882a, []int{1}
+}
+func (m *CreateTree) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreateTree) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreateTree.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreateTree) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateTree.Merge(m, src)
+}
+func (m *CreateTree) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreateTree) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateTree.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateTree proto.InternalMessageInfo
+
+type AddNode struct {
+	TreeID int32  `protobuf:"varint,1,opt,name=TreeID,proto3" json:"TreeID,omitempty"`
+	Key    int32  `protobuf:"varint,2,opt,name=Key,proto3" json:"Key,omitempty"`
+	Value  string `protobuf:"bytes,3,opt,name=Value,proto3" json:"Value,omitempty"`
+}
+
+func (m *AddNode) Reset()      { *m = AddNode{} }
+func (*AddNode) ProtoMessage() {}
+func (*AddNode) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb3889276909882a, []int{2}
+}
+func (m *AddNode) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AddNode) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AddNode.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AddNode) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddNode.Merge(m, src)
+}
+func (m *AddNode) XXX_Size() int {
+	return m.Size()
+}
+func (m *AddNode) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddNode.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AddNode proto.InternalMessageInfo
+
+func (m *AddNode) GetTreeID() int32 {
+	if m != nil {
+		return m.TreeID
+	}
+	return 0
+}
+
+func (m *AddNode) GetKey() int32 {
+	if m != nil {
+		return m.Key
+	}
+	return 0
+}
+
+func (m *AddNode) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*HelloWorld)(nil), "messages.HelloWorld")
+	proto.RegisterType((*CreateTree)(nil), "messages.CreateTree")
+	proto.RegisterType((*AddNode)(nil), "messages.AddNode")
 }
 
 func init() { proto.RegisterFile("tree.proto", fileDescriptor_cb3889276909882a) }
 
 var fileDescriptor_cb3889276909882a = []byte{
-	// 122 bytes of a gzipped FileDescriptorProto
+	// 192 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0x29, 0x4a, 0x4d,
 	0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0xc8, 0x4d, 0x2d, 0x2e, 0x4e, 0x4c, 0x4f, 0x2d,
-	0x56, 0xe2, 0xe1, 0xe2, 0xf2, 0x48, 0xcd, 0xc9, 0xc9, 0x0f, 0xcf, 0x2f, 0xca, 0x49, 0x71, 0x32,
-	0xb9, 0xf0, 0x50, 0x8e, 0xe1, 0xc6, 0x43, 0x39, 0x86, 0x0f, 0x0f, 0xe5, 0x18, 0x1b, 0x1e, 0xc9,
-	0x31, 0xae, 0x78, 0x24, 0xc7, 0x78, 0xe2, 0x91, 0x1c, 0xe3, 0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e,
-	0xc9, 0x31, 0xbe, 0x78, 0x24, 0xc7, 0xf0, 0xe1, 0x91, 0x1c, 0xe3, 0x84, 0xc7, 0x72, 0x0c, 0x17,
-	0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x90, 0xc4, 0x06, 0x36, 0xd4, 0x18, 0x10, 0x00, 0x00,
-	0xff, 0xff, 0x75, 0x7e, 0xae, 0x67, 0x62, 0x00, 0x00, 0x00,
+	0x56, 0xe2, 0xe1, 0xe2, 0xf2, 0x48, 0xcd, 0xc9, 0xc9, 0x0f, 0xcf, 0x2f, 0xca, 0x49, 0x01, 0xf1,
+	0x9c, 0x8b, 0x52, 0x13, 0x4b, 0x52, 0x43, 0x8a, 0x52, 0x53, 0x95, 0x3c, 0xb9, 0xd8, 0x1d, 0x53,
+	0x52, 0xfc, 0xf2, 0x53, 0x52, 0x85, 0xc4, 0xb8, 0xd8, 0x40, 0x42, 0x9e, 0x2e, 0x12, 0x8c, 0x0a,
+	0x8c, 0x1a, 0xac, 0x41, 0x50, 0x9e, 0x90, 0x00, 0x17, 0xb3, 0x77, 0x6a, 0xa5, 0x04, 0x13, 0x58,
+	0x10, 0xc4, 0x14, 0x12, 0xe1, 0x62, 0x0d, 0x4b, 0xcc, 0x29, 0x4d, 0x95, 0x60, 0x56, 0x60, 0xd4,
+	0xe0, 0x0c, 0x82, 0x70, 0x9c, 0x4c, 0x2e, 0x3c, 0x94, 0x63, 0xb8, 0xf1, 0x50, 0x8e, 0xe1, 0xc3,
+	0x43, 0x39, 0xc6, 0x86, 0x47, 0x72, 0x8c, 0x2b, 0x1e, 0xc9, 0x31, 0x9e, 0x78, 0x24, 0xc7, 0x78,
+	0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c, 0x2f, 0x1e, 0xc9, 0x31, 0x7c, 0x78, 0x24, 0xc7,
+	0x38, 0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7, 0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x24, 0xb1, 0x81,
+	0x5d, 0x6b, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x07, 0x94, 0xc1, 0xdb, 0xbb, 0x00, 0x00, 0x00,
 }
 
 func (this *HelloWorld) Equal(that interface{}) bool {
@@ -97,12 +197,84 @@ func (this *HelloWorld) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *CreateTree) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*CreateTree)
+	if !ok {
+		that2, ok := that.(CreateTree)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	return true
+}
+func (this *AddNode) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*AddNode)
+	if !ok {
+		that2, ok := that.(AddNode)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.TreeID != that1.TreeID {
+		return false
+	}
+	if this.Key != that1.Key {
+		return false
+	}
+	if this.Value != that1.Value {
+		return false
+	}
+	return true
+}
 func (this *HelloWorld) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 4)
 	s = append(s, "&messages.HelloWorld{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *CreateTree) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&messages.CreateTree{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *AddNode) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&messages.AddNode{")
+	s = append(s, "TreeID: "+fmt.Sprintf("%#v", this.TreeID)+",\n")
+	s = append(s, "Key: "+fmt.Sprintf("%#v", this.Key)+",\n")
+	s = append(s, "Value: "+fmt.Sprintf("%#v", this.Value)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -132,6 +304,58 @@ func (m *HelloWorld) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *CreateTree) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreateTree) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *AddNode) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AddNode) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.TreeID != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintTree(dAtA, i, uint64(m.TreeID))
+	}
+	if m.Key != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintTree(dAtA, i, uint64(m.Key))
+	}
+	if len(m.Value) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintTree(dAtA, i, uint64(len(m.Value)))
+		i += copy(dAtA[i:], m.Value)
+	}
+	return i, nil
+}
+
 func encodeVarintTree(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -147,6 +371,34 @@ func (m *HelloWorld) Size() (n int) {
 	}
 	var l int
 	_ = l
+	return n
+}
+
+func (m *CreateTree) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *AddNode) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.TreeID != 0 {
+		n += 1 + sovTree(uint64(m.TreeID))
+	}
+	if m.Key != 0 {
+		n += 1 + sovTree(uint64(m.Key))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovTree(uint64(l))
+	}
 	return n
 }
 
@@ -168,6 +420,27 @@ func (this *HelloWorld) String() string {
 		return "nil"
 	}
 	s := strings.Join([]string{`&HelloWorld{`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *CreateTree) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CreateTree{`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *AddNode) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&AddNode{`,
+		`TreeID:` + fmt.Sprintf("%v", this.TreeID) + `,`,
+		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
+		`Value:` + fmt.Sprintf("%v", this.Value) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -209,6 +482,182 @@ func (m *HelloWorld) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: HelloWorld: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTree(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthTree
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthTree
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreateTree) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTree
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreateTree: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreateTree: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTree(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthTree
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthTree
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AddNode) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTree
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AddNode: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AddNode: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TreeID", wireType)
+			}
+			m.TreeID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTree
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TreeID |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			m.Key = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTree
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Key |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTree
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTree
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTree
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTree(dAtA[iNdEx:])
