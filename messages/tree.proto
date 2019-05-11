@@ -3,12 +3,20 @@ package messages;
 
 message HelloWorld {}
 
-message CreateTree {}
+message CreateTree {
+    int32 LeafSize = 1;
+}
+
+message TreeCreated {
+    string Token = 1;
+    int32 TreeID = 2;
+}
 
 message AddNode {
-    int32 TreeID = 1;
-    int32 Key = 2;
-    string Value = 3;
+    string Token = 1;
+    int32 TreeID = 2;
+    int32 Key = 3;
+    string Value = 4;
 }
 
 
