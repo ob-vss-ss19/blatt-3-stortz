@@ -12,7 +12,19 @@ message TreeCreated {
     int32 TreeID = 2;
 }
 
-message AddNode {
+message InvalidRequest {
+    string Token = 1;
+    int32 TreeID = 2;
+    string Description = 3;
+}
+
+message SuccessfulRequest {
+    string Token = 1;
+    int32 TreeID = 2;
+    string Description = 3;
+}
+
+message Add {
     string Token = 1;
     int32 TreeID = 2;
     int32 Key = 3;
