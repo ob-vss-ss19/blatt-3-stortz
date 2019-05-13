@@ -58,3 +58,36 @@ genaue Bezeichnung in die Consolenausgabe des Jenkins-Jobs.
 Wenn Sie die Imagenamen oben (`treeservice` und `treecli`) durch die Namen aus der
 Registry ersetzen, können Sie Ihre Lösung mit den selben Kommandos wie oben beschrieben,
 ausprobieren.
+
+## CLI-Befehlsübersicht
+
+### Befehle
+  ```
+  create
+    Creates a new tree; returns the id and a token
+  add key value
+    Inserts a key-value-pair into the specified tree
+  remove key
+    Removes the key-value-pair with the given key
+  find key
+    Returns the key-value pair for the given key
+  traverse
+    Returns the traversed tree
+  delete
+    Deletes the specified tree
+    -Requires authorized flag set to true
+  ```
+  
+ ### Flags
+  ```
+  --token=string
+    token for tree access 
+  --id=int
+    specifies tree-id
+  --remote=string
+    remote adress (default: "localhost:8092")
+  --bind=string
+    bind adress (default: "127.0.0.1:8091")
+  --authorized=bool
+    authorizes for dangerous commands like delete (default: false)
+  ```
