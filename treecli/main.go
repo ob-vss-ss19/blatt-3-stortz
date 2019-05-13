@@ -35,6 +35,11 @@ func (state *MyActor) Receive(context actor.Context) {
 			fmt.Printf("{%d, %s}", k.Key, k.Value)
 		}
 		wg.Done()
+	case *messages.TreeList:
+		fmt.Println("CLI received Tree-List:")
+		for _, k := range message.GetTrees() {
+			fmt.Printf("%d\n", k)
+		}
 	}
 }
 
@@ -147,6 +152,14 @@ func main() {
 		}
 		rootContext.RequestWithCustomSender(remotePid, &messages.Traverse{TreeID: int32(*flagID), Token: *flagToken}, pid)
 		wg.Wait()
+	case "trees":
+		println("Trying to get a list of available trees")
+		if len(flag.Args()) != 1 {
+			println("invalid amount of args")
+			return
+		}
+		rootContext.RequestWithCustomSender(remotePid, &messages.Trees{}, pid)
+
 	case "":
 		fmt.Println("No command specified!")
 		wg.Done()

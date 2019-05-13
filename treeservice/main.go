@@ -78,8 +78,13 @@ func (state *MyActor) Receive(context actor.Context) {
 			/*desc := fmt.Sprintf("Service tries to traverse Tree %d \n", message.TreeID)
 			context.Respond(&messages.SuccessfulRequest{Token: message.Token, TreeID: message.TreeID, Description: desc})*/
 		}
-	case *messages.TreeList:
+	case *messages.Trees:
 		fmt.Printf("Service received TreeList-Message\n")
+		t := make([]int32, 0)
+		for k, _ := range trees {
+			t = append(t, k)
+		}
+		context.Respond(&messages.TreeList{Trees: t})
 
 	default: // just for linter
 	}
