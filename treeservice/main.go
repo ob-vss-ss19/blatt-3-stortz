@@ -1,13 +1,11 @@
 package main
 
 import (
-	"crypto/rand"
 	"flag"
 	"fmt"
-	"sync"
-
 	"github.com/AsynkronIT/protoactor-go/actor"
 	"github.com/AsynkronIT/protoactor-go/remote"
+	"sync"
 	"vss/blatt3/blatt-3-stortz/messages"
 	"vss/blatt3/blatt-3-stortz/tree"
 )
@@ -20,73 +18,107 @@ var tokenToID = make(map[string]int32)
 
 func (state *MyActor) Receive(context actor.Context) {
 	switch message := context.Message().(type) {
-	case *messages.HelloWorld:
-		//fmt.Printf("Service not responding bc syntax")
-		context.Respond(&messages.HelloWorld{})
 	case *messages.Add:
 		fmt.Printf("Service received AddNode-Message\n")
-		if tokenToID[message.Token] == message.TreeID { //Valid Request
-			//Get Root
+		if validateTokenAndID(message.Token, message.TreeID, context) {
 			pid := trees[message.TreeID]
-			if pid == nil{
-				desc := fmt.Sprintf("Service found no tree for the given ID {Token: %s, ID %d}\n", message.Token, message.TreeID)
-				fmt.Println(desc)
-				context.Respond(&messages.InvalidRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
-			}
-			context.Send(pid, &tree.Add{Key:message.Key, Value:message.Value})
+			context.Send(pid, &tree.Add{Key:int(message.Key), Value:message.Value})
 			desc := fmt.Sprintf("Service tries to create Node for Tree %d {k: %d, v: %s}\n", message.TreeID, message.Key, message.Value)
 			context.Respond(&messages.SuccessfulRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
-
-
-		}else { //Invalid Request; Token and ID mismatch
-			desc := fmt.Sprintf("Service received mismatched Token and ID {Token: %s, ID %d}\n", message.Token, message.TreeID)
-			fmt.Println(desc)
-			context.Respond(&messages.InvalidRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
 		}
 
 	case *messages.CreateTree:
 		fmt.Printf("Service received CreateTree-Message {Leaf-Size: %d}\n", message.LeafSize)
 		token := generateToken()
-		context.Respond(&messages.TreeCreated{Token:token,TreeID: nextID})
-
 		//Create Node
 		props := actor.PropsFromProducer(func() actor.Actor {
-			return &tree.Node{LeafSize:message.LeafSize}
+			return &tree.Node{LeafSize:int(message.LeafSize)}
 		})
 		pid := context.Spawn(props)
 		trees[nextID] = pid
 		tokenToID[token] = nextID
 
-		nextID ++
 
+		context.Respond(&messages.TreeCreated{Token:token,TreeID: nextID})
+		nextID ++
+	case *messages.Delete:
+		fmt.Printf("Service received Delete-Message for Tree %d with Token %s \n", message.TreeID, message.Token)
+		if validateTokenAndID(message.Token, message.TreeID, context) {
+			pid := trees[message.TreeID]
+			context.Send(pid, &tree.Delete{})
+			desc := fmt.Sprintf("Service tries to delete tree %d {k: %d, v: %s}\n", message.TreeID)
+			context.Respond(&messages.SuccessfulRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
+		}
+	case *messages.Find:
+		fmt.Printf("Service received Find-Message for Tree %d with Token %s {Key: %d}\n", message.TreeID, message.Token, message.Key)
+		if validateTokenAndID(message.Token, message.TreeID, context) {
+			pid := trees[message.TreeID]
+			context.Send(pid, &tree.Find{Key:int(message.Key), Requester: context.Sender()})
+			//desc := fmt.Sprintf("Service tries to find pair for Tree %d {k: %d, }\n", message.TreeID, message.Key, message.Value)
+			//context.Respond(&messages.SuccessfulRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
+		}
+	case *messages.Remove:
+		fmt.Printf("Service received Remove-Message for Tree %d with Token %s {Key: %d}\n", message.TreeID, message.Token, message.Key)
+		if validateTokenAndID(message.Token, message.TreeID, context) {
+			pid := trees[message.TreeID]
+			context.Send(pid, &tree.Remove{Key:int(message.Key)})
+			desc := fmt.Sprintf("Service tries to remove pair for Tree %d {k: %d}\n", message.TreeID, message.Key)
+			context.Respond(&messages.SuccessfulRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
+		}
+	case *messages.Traverse:
+		fmt.Printf("Service received Traverse-Message for Tree %d with Token %s\n", message.TreeID, message.Token)
+		if validateTokenAndID(message.Token, message.TreeID, context) {
+			pid := trees[message.TreeID]
+			context.Send(pid, &tree.Traverse{})
+			desc := fmt.Sprintf("Service tries to traverse Tree %d \n", message.TreeID)
+			context.Respond(&messages.SuccessfulRequest{Token:message.Token,TreeID: message.TreeID, Description:desc})
+		}
 
 	default: // just for linter
 	}
 }
 
-func NewMyActor() actor.Actor {
-	fmt.Printf("Hello-Actor is up and running\n")
+func validateTokenAndID(token string, id int32, context actor.Context) bool{
+	if tokenToID[token] == id { //Valid Request
+		//Get Root
+		pid := trees[id]
+		if pid == nil{
+			desc := fmt.Sprintf("Service found no tree for the given ID {Token: %s, ID %d}\n", token, id)
+			fmt.Println(desc)
+			context.Respond(&messages.InvalidRequest{Token:token,TreeID: id, Description:desc})
+			return false
+		} else {
+			return true
+		}
+	}else { //Invalid Request; Token and ID mismatch
+		desc := fmt.Sprintf("Service received mismatched Token and ID {Token: %s, ID %d}\n", token, id)
+		fmt.Println(desc)
+		context.Respond(&messages.InvalidRequest{Token:token,TreeID: id, Description:desc})
+		return false
+	}
+}
+
+func ServiceActor() actor.Actor {
+	fmt.Printf("Service-Actor is up and running\n")
 	return &MyActor{}
 }
 
 // nolint:gochecknoglobals
 var flagBind = flag.String("bind", "localhost:8091", "Bind to address")
 
+func generateToken() string {
+	return "a"
+/*	b := make([]byte, 4)
+	rand.Read(b)
+	return fmt.Sprintf("%x", b)*/
+}
+
 func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
-
-
 	defer wg.Wait()
-
 	flag.Parse()
 	remote.Start(*flagBind)
-
-	remote.Register("hello", actor.PropsFromProducer(NewMyActor))
+	remote.Register("ServiceActor", actor.PropsFromProducer(ServiceActor))
 }
 
-func generateToken() string {
-	b := make([]byte, 4)
-	rand.Read(b)
-	return fmt.Sprintf("%x", b)
-}

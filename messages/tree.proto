@@ -31,4 +31,32 @@ message Add {
     string Value = 4;
 }
 
+message Find {
+    string Token = 1;
+    int32 TreeID = 2;
+    int32 Key = 3;
+}
+
+message Found {
+    string Token = 1;
+    int32 TreeID = 2;
+    int32 Key = 3;
+    string Value = 4;
+}
+
+message Remove {
+    string Token = 1;
+    int32 TreeID = 2;
+    int32 Key = 3;
+}
+
+message Traverse {
+    string Token = 1;
+    int32 TreeID = 2;
+}
+
+message Delete {
+    string Token = 1;
+    int32 TreeID = 2;
+}
 
