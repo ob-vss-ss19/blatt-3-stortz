@@ -27,7 +27,7 @@ func (state *MyActor) Receive(context actor.Context) {
 		fmt.Printf("CLI received ValidRequest {Token: %s, ID: %d}: %s\n", message.Token, message.TreeID, message.Description)
 		wg.Done()
 	case *messages.Found:
-		fmt.Println("CLI received answer: {key: %d, value: %s}", message.Key, message.Value)
+		fmt.Printf("CLI received answer: {key: %d, value: %s}\n", message.Key, message.Value)
 		wg.Done()
 	case *messages.TraversedAnswer:
 		fmt.Println("CLI received traverse answer:")

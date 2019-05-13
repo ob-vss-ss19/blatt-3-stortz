@@ -149,7 +149,6 @@ func (state *Node) Receive(context actor.Context) {
 			msg.RemainingNodes = append(msg.RemainingNodes, state.RightSucc)
 			context.Send(state.LeftSucc, &Traverse{Requester: msg.Requester, RemainingNodes: msg.RemainingNodes, Data: msg.Data})
 		} else { //Leaf
-
 			//Add Data
 			for k, v := range state.Data {
 				msg.Data[k] = v

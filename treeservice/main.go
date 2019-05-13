@@ -45,7 +45,9 @@ func (state *MyActor) Receive(context actor.Context) {
 		if validateTokenAndID(message.Token, message.TreeID, context) {
 			pid := trees[message.TreeID]
 			context.Send(pid, &tree.Delete{})
-			desc := fmt.Sprintf("Service tries to delete tree %d {k: %d, v: %s}\n", message.TreeID)
+			delete(trees, message.TreeID)
+			delete(tokenToID, message.Token)
+			desc := fmt.Sprintf("Service tries to delete tree %d\n", message.TreeID)
 			context.Respond(&messages.SuccessfulRequest{Token: message.Token, TreeID: message.TreeID, Description: desc})
 		}
 	case *messages.Find:
