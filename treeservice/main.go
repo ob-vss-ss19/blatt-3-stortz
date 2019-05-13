@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/rand"
 	"flag"
 	"fmt"
 	"github.com/AsynkronIT/protoactor-go/actor"
@@ -81,7 +82,7 @@ func (state *MyActor) Receive(context actor.Context) {
 	case *messages.Trees:
 		fmt.Printf("Service received TreeList-Message\n")
 		t := make([]int32, 0)
-		for k, _ := range trees {
+		for k := range trees {
 			t = append(t, k)
 		}
 		context.Respond(&messages.TreeList{Trees: t})
@@ -119,10 +120,9 @@ func ServiceActor() actor.Actor {
 var flagBind = flag.String("bind", "localhost:8091", "Bind to address")
 
 func generateToken() string {
-	return "a"
-	/*	b := make([]byte, 4)
-		rand.Read(b)
-		return fmt.Sprintf("%x", b)*/
+	b := make([]byte, 4)
+	rand.Read(b)
+	return fmt.Sprintf("%x", b)
 }
 
 func main() {

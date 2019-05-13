@@ -40,6 +40,7 @@ func (state *MyActor) Receive(context actor.Context) {
 		for _, k := range message.GetTrees() {
 			fmt.Printf("%d\n", k)
 		}
+		wg.Done()
 	}
 }
 
@@ -52,11 +53,6 @@ var (
 	flagToken      = flag.String("token", "", "token")
 	flagID         = flag.Int("id", -1, "Tree-ID")
 	flagAuthorized = flag.Bool("authorized", false, "authorization for dangerous commands")
-
-	//flagCommand = flag.String("cmd", "", "specify command")
-	//flagKey = flag.Int("key", -1, "Key")
-	//flagValue = flag.Int("value", -1, "Value")
-	//flagLeafSize = flag.Int("leafsize", 2, "Leaf-Size")
 )
 
 var wg sync.WaitGroup
@@ -94,10 +90,6 @@ func main() {
 		panic(err)
 	}
 	remotePid := pidResp.Pid
-
-	/*for i := 0; i < 10; i++ {
-		rootContext.RequestWithCustomSender(remotePid, message, pid)
-	}*/
 
 	switch flag.Args()[0] {
 	case "create":

@@ -180,15 +180,3 @@ func (state *Node) Receive(context actor.Context) {
 		}
 	}
 }
-
-/*func main() {
-	context := actor.EmptyRootContext
-	props := actor.PropsFromProducer(func() actor.Actor {
-		return &node{Amount:2,}
-	})
-	pid := context.Spawn(props)
-	context.Send(pid, &Add{Key: 12, Value: 13})
-	context.Send(pid, &Remove{Key: 14})
-	console.ReadLine() // nolint:errcheck
-}
-*/
