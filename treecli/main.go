@@ -9,7 +9,7 @@ import (
 
 	"github.com/AsynkronIT/protoactor-go/actor"
 	"github.com/AsynkronIT/protoactor-go/remote"
-	"vss/blatt3/blatt-3-stortz/messages"
+	"github.com/ob-vss-ss19/blatt-3-stortz/messages"
 )
 
 type MyActor struct {
@@ -39,7 +39,7 @@ var (
 	flagRemote = flag.String("remote", "127.0.0.1:8091", "remote host:port")
 
 	flagToken = flag.String("token", "", "token")
-	flagID = flag.Int("id", -1, "Tree-ID")
+	flagID    = flag.Int("id", -1, "Tree-ID")
 
 	//flagCommand = flag.String("cmd", "", "specify command")
 	//flagKey = flag.Int("key", -1, "Key")
@@ -102,7 +102,7 @@ func main() {
 			println("invalid amount of args")
 			return
 		}
-		rootContext.RequestWithCustomSender(remotePid, &messages.Delete{TreeID:int32(*flagID), Token:*flagToken}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Delete{TreeID: int32(*flagID), Token: *flagToken}, pid)
 		wg.Wait()
 	case "add":
 		println("Trying to add node")
@@ -112,7 +112,7 @@ func main() {
 		}
 		key := parseToInt32(1)
 		val := flag.Args()[2]
-		rootContext.RequestWithCustomSender(remotePid, &messages.Add{TreeID:int32(*flagID), Token:*flagToken, Key:key, Value:val}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Add{TreeID: int32(*flagID), Token: *flagToken, Key: key, Value: val}, pid)
 		wg.Wait()
 	case "find":
 		println("Trying to find")
@@ -121,7 +121,7 @@ func main() {
 			return
 		}
 		key := parseToInt32(1)
-		rootContext.RequestWithCustomSender(remotePid, &messages.Find{TreeID:int32(*flagID), Token:*flagToken, Key:key}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Find{TreeID: int32(*flagID), Token: *flagToken, Key: key}, pid)
 		wg.Wait()
 	case "remove":
 		println("Trying to remove")
@@ -130,7 +130,7 @@ func main() {
 			return
 		}
 		key := parseToInt32(1)
-		rootContext.RequestWithCustomSender(remotePid, &messages.Remove{TreeID:int32(*flagID), Token:*flagToken, Key:key}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Remove{TreeID: int32(*flagID), Token: *flagToken, Key: key}, pid)
 		wg.Wait()
 	case "traverse":
 		println("Trying to traverse")
@@ -138,12 +138,10 @@ func main() {
 			println("invalid amount of args")
 			return
 		}
-		rootContext.RequestWithCustomSender(remotePid, &messages.Traverse{TreeID:int32(*flagID), Token:*flagToken}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Traverse{TreeID: int32(*flagID), Token: *flagToken}, pid)
 		wg.Wait()
 	case "":
 		fmt.Println("No command specified!")
 		wg.Done()
 	}
 }
-
-
