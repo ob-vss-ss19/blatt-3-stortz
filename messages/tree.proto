@@ -65,5 +65,6 @@ message TraversedAnswer {
 message Delete {
     string Token = 1;
     int32 TreeID = 2;
+    bool Authorized = 3;
 }
 

@@ -44,8 +44,9 @@ var (
 	// nolint:gochecknoglobals
 	flagRemote = flag.String("remote", "127.0.0.1:8091", "remote host:port")
 
-	flagToken = flag.String("token", "", "token")
-	flagID    = flag.Int("id", -1, "Tree-ID")
+	flagToken      = flag.String("token", "", "token")
+	flagID         = flag.Int("id", -1, "Tree-ID")
+	flagAuthorized = flag.Bool("authorized", false, "authorization for dangerous commands")
 
 	//flagCommand = flag.String("cmd", "", "specify command")
 	//flagKey = flag.Int("key", -1, "Key")
@@ -108,7 +109,7 @@ func main() {
 			println("invalid amount of args")
 			return
 		}
-		rootContext.RequestWithCustomSender(remotePid, &messages.Delete{TreeID: int32(*flagID), Token: *flagToken}, pid)
+		rootContext.RequestWithCustomSender(remotePid, &messages.Delete{TreeID: int32(*flagID), Token: *flagToken, Authorized: *flagAuthorized}, pid)
 		wg.Wait()
 	case "add":
 		println("Trying to add node")

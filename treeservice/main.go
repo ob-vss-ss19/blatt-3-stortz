@@ -42,7 +42,11 @@ func (state *MyActor) Receive(context actor.Context) {
 		nextID++
 	case *messages.Delete:
 		fmt.Printf("Service received Delete-Message for Tree %d with Token %s \n", message.TreeID, message.Token)
-		if validateTokenAndID(message.Token, message.TreeID, context) {
+		if !message.Authorized {
+			desc := fmt.Sprintf("Service not authorized to delete tree!\n")
+			fmt.Println(desc)
+			context.Respond(&messages.InvalidRequest{Token: message.Token, TreeID: message.TreeID, Description: desc})
+		} else if validateTokenAndID(message.Token, message.TreeID, context) {
 			pid := trees[message.TreeID]
 			context.Send(pid, &tree.Delete{})
 			delete(trees, message.TreeID)
