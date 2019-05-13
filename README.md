@@ -51,7 +51,7 @@
     
     Starten der CLI in einem zweiten Terminal.
     ```
-    cd blatt-3-lallinger/treecli
+    cd blatt-3-stortz/treecli
     go build
     ./treecli trees
     ```
