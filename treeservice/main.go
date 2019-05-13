@@ -68,7 +68,7 @@ func (state *MyActor) Receive(context actor.Context) {
 		fmt.Printf("Service received Traverse-Message for Tree %d with Token %s\n", message.TreeID, message.Token)
 		if validateTokenAndID(message.Token, message.TreeID, context) {
 			pid := trees[message.TreeID]
-			context.Send(pid, &tree.Traverse{})
+			context.Send(pid, &tree.Traverse{Requester: context.Sender()})
 			desc := fmt.Sprintf("Service tries to traverse Tree %d \n", message.TreeID)
 			context.Respond(&messages.SuccessfulRequest{Token: message.Token, TreeID: message.TreeID, Description: desc})
 		}

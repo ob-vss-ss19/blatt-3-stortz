@@ -26,7 +26,11 @@ type Found struct {
 
 type Delete struct{}
 
-type Traverse struct{}
+type Traverse struct {
+	Requester      *actor.PID
+	RemainingNodes []*actor.PID
+	Data           map[int]string
+}
 
 type Node struct {
 	MaxLeft   int
@@ -135,6 +139,42 @@ func (state *Node) Receive(context actor.Context) {
 		context.Stop(context.Self())
 	case *Traverse:
 		fmt.Printf("Traversing tree\n")
+		if msg.Data == nil {
+			msg.Data = make(map[int]string)
+		}
+
+		if state.LeftSucc != nil && state.RightSucc != nil { //Node
+
+			//Add right node to remaining nodes then call left
+			msg.RemainingNodes = append(msg.RemainingNodes, state.RightSucc)
+			context.Send(state.LeftSucc, &Traverse{Requester: msg.Requester, RemainingNodes: msg.RemainingNodes, Data: msg.Data})
+		} else { //Leaf
+
+			//Add Data
+			for k, v := range state.Data {
+				msg.Data[k] = v
+			}
+
+			if len(msg.RemainingNodes) > 0 {
+				pid := msg.RemainingNodes[len(msg.RemainingNodes)-1]
+				msg.RemainingNodes = msg.RemainingNodes[:len(msg.RemainingNodes)-1]
+				context.Send(pid, &Traverse{Requester: msg.Requester, RemainingNodes: msg.RemainingNodes, Data: msg.Data})
+
+			} else { //Visited all Nodes
+
+				//Sort
+				var keys []int
+				for k := range msg.Data {
+					keys = append(keys, int(k))
+				}
+				sort.Ints(keys)
+
+				for i := range keys {
+					fmt.Printf("{%d, %s}", keys[i], msg.Data[keys[i]])
+				}
+
+			}
+		}
 	}
 }
 
