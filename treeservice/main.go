@@ -78,6 +78,8 @@ func (state *MyActor) Receive(context actor.Context) {
 			/*desc := fmt.Sprintf("Service tries to traverse Tree %d \n", message.TreeID)
 			context.Respond(&messages.SuccessfulRequest{Token: message.Token, TreeID: message.TreeID, Description: desc})*/
 		}
+	case *messages.TreeList:
+		fmt.Printf("Service received TreeList-Message\n")
 
 	default: // just for linter
 	}
