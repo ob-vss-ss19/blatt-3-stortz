@@ -169,9 +169,13 @@ func (state *Node) Receive(context actor.Context) {
 				}
 				sort.Ints(keys)
 
+				pairs := make([]*messages.Pair, 0)
+
 				for i := range keys {
 					fmt.Printf("{%d, %s}", keys[i], msg.Data[keys[i]])
+					pairs = append(pairs, &messages.Pair{Key: int32(keys[i]), Value: msg.Data[keys[i]]})
 				}
+				context.Send(msg.Requester, &messages.TraversedAnswer{Pairs: pairs})
 
 			}
 		}

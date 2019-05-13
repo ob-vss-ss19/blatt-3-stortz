@@ -30,7 +30,7 @@ func (state *MyActor) Receive(context actor.Context) {
 		fmt.Println("CLI received answer: {key: %d, value: %s}", message.Key, message.Value)
 		wg.Done()
 	case *messages.TraversedAnswer:
-		fmt.Println("CLI received traverse answer")
+		fmt.Println("CLI received traverse answer:")
 		for _, k := range message.GetPairs() {
 			fmt.Printf("{%d, %s}", k.Key, k.Value)
 		}
