@@ -159,7 +159,7 @@ func main() {
 			return
 		}
 		rootContext.RequestWithCustomSender(remotePid, &messages.Trees{}, pid)
-
+		wg.Wait()
 	case "":
 		fmt.Println("No command specified!")
 		wg.Done()
