@@ -68,3 +68,11 @@ message Delete {
     bool Authorized = 3;
 }
 
+message Trees {
+
+}
+
+message TreeList {
+    repeated int32 trees = 1;
+}
+
